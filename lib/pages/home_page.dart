@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/challange_ad.dart';
-import '../widgets/headline_texts.dart';
 import '../widgets/tasks_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,12 +6,28 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: const [
-      HeadlineTexts(),
-      SizedBox(height: 40),
-      ChallengeAdd(),
-      SizedBox(height: 40),
-      Expanded(child: TasksList()),
-    ]);
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.calendar_month_outlined),
+            iconSize: 30,
+            color: Colors.indigo[600],
+            splashRadius: 20,
+          )
+        ],
+        backgroundColor: Colors.white,
+        title: const Text(
+          'My Tasks',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+      ),
+      body: const TasksList(),
+    );
   }
 }
