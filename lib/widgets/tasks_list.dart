@@ -7,16 +7,24 @@ class TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       itemCount: 15,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
-          return const BannerAddTask();
+          return Column(
+            children: const [
+              BannerAddTask(),
+              TasksListItem(),
+            ],
+          );
         } else {
-          return TasksListItem();
+          return const TasksListItem();
         }
       },
+      separatorBuilder: (BuildContext context, index) =>
+          const SizedBox(height: 8.0),
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_app/data.dart';
 
 class BannerAddTask extends StatelessWidget {
   const BannerAddTask({
     super.key,
   });
+
+  get activeTaskStatus => Data().data.length;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +15,9 @@ class BannerAddTask extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'В процессе(5)',
-            style: TextStyle(
+          Text(
+            'В процессе($activeTaskStatus)',
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
