@@ -10,21 +10,18 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.calendar_month_outlined),
-            iconSize: 30,
-            color: Colors.indigo[600],
+            onPressed: () {
+              Navigator.of(context).pushNamed('/add_task');
+            },
+            icon: const Icon(Icons.add),
             splashRadius: 20,
+          ),
+          const SizedBox(
+            width: 20,
           )
         ],
-        backgroundColor: Colors.white,
         title: const Text(
           'My Tasks',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            fontWeight: FontWeight.w900,
-          ),
         ),
       ),
       body: const TasksList(),
