@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_app/data/data.dart';
 import 'package:to_do_list_app/widgets/tasks_list_item.dart';
 import 'banner_add_task.dart';
 
@@ -9,18 +10,18 @@ class TasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      itemCount: 15,
+      itemCount: Data().data.length,
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
           return Column(
-            children: const [
-              BannerAddTask(),
-              TasksListItem(),
+            children: [
+              const BannerAddTask(),
+              TasksListItem(index: index),
             ],
           );
         } else {
-          return const TasksListItem();
+          return TasksListItem(index: index);
         }
       },
       separatorBuilder: (BuildContext context, index) =>
