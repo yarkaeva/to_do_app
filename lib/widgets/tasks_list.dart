@@ -17,11 +17,11 @@ class TasksList extends StatelessWidget {
           return Column(
             children: [
               const BannerAddTask(),
-              TasksListItem(index: index),
+              TasksListItem(task: Data().data[index]),
             ],
           );
         } else {
-          return TasksListItem(index: index);
+          return TasksListItem(task: Data().data[index]);
         }
       },
       separatorBuilder: (BuildContext context, index) =>
