@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/data.dart';
 
 class BannerAddTask extends StatelessWidget {
   const BannerAddTask({super.key});
@@ -8,9 +9,9 @@ class BannerAddTask extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          'В процессе()',
-          style: TextStyle(
+        Text(
+          'В процессе(${Data().activeTaskCount})',
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
