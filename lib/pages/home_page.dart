@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/add_task_widget.dart';
 import '../widgets/tasks_list.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,7 +12,11 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/add_task');
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AddTask();
+                  });
             },
             icon: const Icon(Icons.add),
             splashRadius: 20,

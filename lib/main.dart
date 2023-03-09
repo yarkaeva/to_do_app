@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/add_task_page.dart';
+import 'widgets/add_task_widget.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -13,6 +13,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        bottomSheetTheme: const BottomSheetThemeData(
+          // modalElevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+          ),
+        ),
         buttonTheme: ButtonThemeData(buttonColor: Colors.red[200]),
         primarySwatch: Colors.indigo,
         appBarTheme: AppBarTheme(
