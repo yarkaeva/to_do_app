@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'widgets/add_task_widget.dart';
 import 'pages/home_page.dart';
 
 void main() {
@@ -13,8 +12,41 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            textStyle: const MaterialStatePropertyAll(
+              TextStyle(fontSize: 16),
+            ),
+            backgroundColor: MaterialStatePropertyAll(Colors.indigo[300]),
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+        ),
+        checkboxTheme: CheckboxThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        listTileTheme: ListTileThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.indigo,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         bottomSheetTheme: const BottomSheetThemeData(
-          // modalElevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(20),
@@ -41,7 +73,6 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/add_task': (context) => const AddTask(),
       },
     );
   }

@@ -2,7 +2,7 @@ import 'package:to_do_list_app/data/task_model.dart';
 
 class Data {
   List<TaskModel> get data => List.generate(
-        50,
+        3,
         (index) => TaskModel(
             id: index,
             title: 'Генеральная уборка',

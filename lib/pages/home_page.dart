@@ -13,10 +13,11 @@ class HomePage extends StatelessWidget {
           IconButton(
             onPressed: () {
               showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const AddTask();
-                  });
+                context: context,
+                builder: (BuildContext context) {
+                  return const AddTask();
+                },
+              );
             },
             icon: const Icon(Icons.add),
             splashRadius: 20,
