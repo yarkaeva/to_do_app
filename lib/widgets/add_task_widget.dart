@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_app/data/data.dart';
 import 'package:to_do_list_app/data/task_model.dart';
+
+import '../pages/home_page.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -32,12 +35,13 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  void createNewTask() {
+  void newTaskModel() {
     TaskModel newTask = TaskModel(
-      id: 51,
+      id: DateTime.now().millisecondsSinceEpoch.toInt(),
       title: taskTitleInputController.text,
       dueDate: _selectedDate,
     );
+    ;
   }
 
   @override
@@ -82,7 +86,7 @@ class _AddTaskState extends State<AddTask> {
           const SizedBox(height: 25),
           ElevatedButton(
             onPressed: () {
-              createNewTask();
+              newTaskModel;
               Navigator.pop(context);
             },
             child: const Text('Создать задачу'),
