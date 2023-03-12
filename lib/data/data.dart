@@ -4,9 +4,10 @@ class Data {
   List<TaskModel> data = List.generate(
     3,
     (index) => TaskModel(
-        id: index,
-        title: 'Генеральная уборка',
-        dueDate: DateTime(2023, 3, 13, 12, 30)),
+      id: index,
+      title: 'Генеральная уборка',
+      dueDate: DateTime(2023, 3, 13),
+    ),
   );
 
   int get activeTaskCount => data.where((element) => !element.isDone).length;

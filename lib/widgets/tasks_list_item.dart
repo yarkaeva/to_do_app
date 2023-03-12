@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import '../data/task_model.dart';
+import 'package:intl/intl.dart';
+import 'package:to_do_list_app/data/task_model.dart';
 
 class TasksListItem extends StatefulWidget {
-  const TasksListItem({super.key, required this.task});
+  const TasksListItem({
+    required this.task,
+    super.key,
+  });
   final TaskModel task;
 
   @override
@@ -24,20 +28,22 @@ class _TasksListItemState extends State<TasksListItem> {
       tileColor: isDone == false ? Colors.indigo[100] : Colors.green[300],
       activeColor: Colors.indigo[400],
       value: isDone,
-      onChanged: (bool? newStatus) {
+      onChanged: (newStatus) {
         setState(() {
           isDone = newStatus!;
         });
       },
-      title: Text(widget.task.title,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                decoration: isDone == true
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-              )),
+      title: Text(
+        widget.task.title,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              decoration: isDone == true
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+            ),
+      ),
       subtitle: widget.task.dueDate != null
           ? Text(
-              'дедлайн:  ${widget.task.dueDate} ',
+              'крайний срок:  ${DateFormat('dd. MM. yy').format(widget.task.dueDate!)}',
             )
           : null,
     );

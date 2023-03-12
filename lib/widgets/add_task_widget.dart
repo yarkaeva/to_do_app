@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_app/data/data.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do_list_app/data/task_model.dart';
 
-import '../pages/home_page.dart';
-
 class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+  const AddTask({required this.addNewTaskToTasksList, super.key});
+  final void Function(TaskModel newTask) addNewTaskToTasksList;
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -29,19 +28,22 @@ class _AddTaskState extends State<AddTask> {
         if (_selectedDate == null) {
           dateInputController.clear();
         } else {
-          dateInputController.text = _selectedDate.toString();
+          dateInputController.text =
+              DateFormat('dd. MM. yy').format(_selectedDate!);
         }
       });
     });
   }
 
-  void newTaskModel() {
-    TaskModel newTask = TaskModel(
-      id: DateTime.now().millisecondsSinceEpoch.toInt(),
-      title: taskTitleInputController.text,
-      dueDate: _selectedDate,
-    );
-    ;
+  void createNewTask() {
+    setState(() {
+      final newTask = TaskModel(
+        id: DateTime.now().millisecondsSinceEpoch.toInt(),
+        title: taskTitleInputController.text,
+        dueDate: _selectedDate,
+      );
+      widget.addNewTaskToTasksList(newTask);
+    });
   }
 
   @override
@@ -85,10 +87,7 @@ class _AddTaskState extends State<AddTask> {
           ),
           const SizedBox(height: 25),
           ElevatedButton(
-            onPressed: () {
-              newTaskModel;
-              Navigator.pop(context);
-            },
+            onPressed: createNewTask,
             child: const Text('Создать задачу'),
           ),
         ],

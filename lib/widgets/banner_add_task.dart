@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/data.dart';
+import 'package:to_do_list_app/data/data.dart';
 
 class BannerAddTask extends StatelessWidget {
   const BannerAddTask({super.key});

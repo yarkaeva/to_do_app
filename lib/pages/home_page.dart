@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_app/data/task_model.dart';
-
-import '../widgets/add_task_widget.dart';
-import '../widgets/tasks_list_item.dart';
+import 'package:to_do_list_app/widgets/add_task_widget.dart';
+import 'package:to_do_list_app/widgets/tasks_list_item.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key, required this.newData});
+  HomePage({required this.newData, super.key});
   List<TaskModel> newData;
-
-  void createNewTask(TaskModel newTask) {
-    newData.insert(0, newTask);
-  }
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  void addNewTaskToTasksList(TaskModel newTask) {
+    widget.newData.insert(0, newTask);
+    setState(() {});
+  }
+
   void _showModalBottomSheet() {
-    showModalBottomSheet(
+    showModalBottomSheet<Widget>(
       context: context,
-      builder: (BuildContext context) {
-        return const AddTask();
+      builder: (context) {
+        return AddTask(
+          addNewTaskToTasksList: addNewTaskToTasksList,
+        );
       },
     );
   }
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(
             width: 20,
-          )
+          ),
         ],
         title: const Text(
           'My Tasks',
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         itemCount: widget.newData.length,
         shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
+        itemBuilder: (context, index) {
           if (index == 0) {
             return Column(
               children: [
@@ -62,8 +64,7 @@ class _HomePageState extends State<HomePage> {
             return TasksListItem(task: widget.newData[index]);
           }
         },
-        separatorBuilder: (BuildContext context, index) =>
-            const SizedBox(height: 8.0),
+        separatorBuilder: (context, index) => const SizedBox(height: 8.0),
       ),
     );
   }
