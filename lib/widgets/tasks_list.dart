@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_app/data/data.dart';
 import 'package:to_do_list_app/widgets/tasks_list_item.dart';
-import 'banner_add_task.dart';
 
 class TasksList extends StatelessWidget {
   const TasksList({super.key});
@@ -16,7 +15,9 @@ class TasksList extends StatelessWidget {
         if (index == 0) {
           return Column(
             children: [
-              const BannerAddTask(),
+              const SizedBox(
+                height: 10,
+              ),
               TasksListItem(task: Data().data[index]),
             ],
           );

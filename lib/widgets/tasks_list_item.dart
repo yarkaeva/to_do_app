@@ -14,38 +14,27 @@ class _TasksListItemState extends State<TasksListItem> {
 
   @override
   void initState() {
-    super.initState();
     isDone = widget.task.isDone;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
       tileColor: isDone == false ? Colors.indigo[100] : Colors.green[300],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
       activeColor: Colors.indigo[400],
-      checkboxShape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
       value: isDone,
       onChanged: (bool? newStatus) {
         setState(() {
           isDone = newStatus!;
         });
       },
-      title: Text(
-        widget.task.title,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          decoration:
-              isDone == true ? TextDecoration.lineThrough : TextDecoration.none,
-        ),
-      ),
+      title: Text(widget.task.title,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                decoration: isDone == true
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+              )),
       subtitle: widget.task.dueDate != null
           ? Text(
               'дедлайн:  ${widget.task.dueDate} ',
