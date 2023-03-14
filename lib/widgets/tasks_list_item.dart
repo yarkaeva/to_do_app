@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:to_do_list_app/core/extensions/date_time_extensions.dart';
 import 'package:to_do_list_app/data/task_model.dart';
 
 class TasksListItem extends StatefulWidget {
@@ -43,7 +43,7 @@ class _TasksListItemState extends State<TasksListItem> {
       ),
       subtitle: widget.task.dueDate != null
           ? Text(
-              'крайний срок:  ${DateFormat('dd. MM. yy').format(widget.task.dueDate!)}',
+              'крайний срок:  ${widget.task.dueDate!.format}',
             )
           : null,
     );

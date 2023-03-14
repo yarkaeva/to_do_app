@@ -87,7 +87,16 @@ class _AddTaskState extends State<AddTask> {
           ),
           const SizedBox(height: 25),
           ElevatedButton(
-            onPressed: createNewTask,
+            onPressed: () {
+              widget.addNewTaskToTasksList(
+                TaskModel(
+                  id: DateTime.now().millisecondsSinceEpoch.toInt(),
+                  title: taskTitleInputController.text,
+                  dueDate: _selectedDate,
+                ),
+              );
+              Navigator.pop(context);
+            },
             child: const Text('Создать задачу'),
           ),
         ],

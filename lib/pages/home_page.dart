@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_app/data/data.dart';
 import 'package:to_do_list_app/data/task_model.dart';
 import 'package:to_do_list_app/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/widgets/tasks_list_item.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({required this.newData, super.key});
-  List<TaskModel> newData;
+  const HomePage({required this.dataConstructor, super.key});
+  final Data dataConstructor;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  List<TaskModel> get tasksList => widget.dataConstructor.data;
+
   void addNewTaskToTasksList(TaskModel newTask) {
-    widget.newData.insert(0, newTask);
+    tasksList.insert(0, newTask);
     setState(() {});
   }
 
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        itemCount: widget.newData.length,
+        itemCount: tasksList.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           if (index == 0) {
@@ -57,11 +60,11 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                TasksListItem(task: widget.newData[index]),
+                TasksListItem(task: tasksList[index]),
               ],
             );
           } else {
-            return TasksListItem(task: widget.newData[index]);
+            return TasksListItem(task: tasksList[index]);
           }
         },
         separatorBuilder: (context, index) => const SizedBox(height: 8.0),
