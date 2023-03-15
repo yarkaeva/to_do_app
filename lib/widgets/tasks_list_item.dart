@@ -25,8 +25,7 @@ class _TasksListItemState extends State<TasksListItem> {
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
-      // TODO: не используй isDone == false, используй !isDone
-      tileColor: isDone == false ? Colors.indigo[100] : Colors.green[300],
+      tileColor: !isDone ? Colors.indigo[100] : Colors.green[300],
       activeColor: Colors.indigo[400],
       value: isDone,
       onChanged: (newStatus) {
@@ -37,10 +36,8 @@ class _TasksListItemState extends State<TasksListItem> {
       title: Text(
         widget.task.title,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              // TODO: не используй isDone == true, используй isDone
-              decoration: isDone == true
-                  ? TextDecoration.lineThrough
-                  : TextDecoration.none,
+              decoration:
+                  isDone ? TextDecoration.lineThrough : TextDecoration.none,
             ),
       ),
       subtitle: widget.task.dueDate != null
