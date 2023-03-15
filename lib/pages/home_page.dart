@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   void _showModalBottomSheet() {
     showModalBottomSheet<Widget>(
       context: context,
+      isScrollControlled: true,
       builder: (context) {
         return AddTask(
           addNewTaskToTasksList: addNewTaskToTasksList,
