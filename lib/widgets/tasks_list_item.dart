@@ -29,9 +29,11 @@ class _TasksListItemState extends State<TasksListItem> {
       activeColor: Colors.indigo[400],
       value: isDone,
       onChanged: (newStatus) {
-        setState(() {
-          isDone = newStatus!;
-        });
+        setState(
+          () {
+            isDone = newStatus!;
+          },
+        );
       },
       title: Text(
         widget.task.title,

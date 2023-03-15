@@ -35,18 +35,6 @@ class _AddTaskState extends State<AddTask> {
     });
   }
 
-  // Этот метод больше не нужен.
-  void createNewTask() {
-    setState(() {
-      final newTask = TaskModel(
-        id: DateTime.now().millisecondsSinceEpoch.toInt(),
-        title: taskTitleInputController.text,
-        dueDate: _selectedDate,
-      );
-      widget.addNewTaskToTasksList(newTask);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
