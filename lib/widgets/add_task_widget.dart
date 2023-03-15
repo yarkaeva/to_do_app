@@ -36,6 +36,7 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void createNewTask() {
+    // TODO: setState здесь не нужен.
     setState(() {
       final newTask = TaskModel(
         id: DateTime.now().millisecondsSinceEpoch.toInt(),
