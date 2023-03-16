@@ -36,7 +36,7 @@ class _TasksListItemState extends State<TasksListItem> {
         );
       },
       title: Text(
-        widget.task.title,
+        widget.task.title.trim(),
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               decoration:
                   isDone ? TextDecoration.lineThrough : TextDecoration.none,

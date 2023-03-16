@@ -62,7 +62,7 @@ class _AddTaskState extends State<AddTask> {
             TextFormField(
               controller: taskTitleInputController,
               validator: (value) {
-                value?.replaceAll(' ', '');
+                value = value?.replaceAll(' ', '');
                 if (value == null || value.isEmpty) {
                   return 'Название задачи не может быть пустым';
                 }
