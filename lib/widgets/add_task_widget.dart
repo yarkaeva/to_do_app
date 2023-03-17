@@ -71,7 +71,10 @@ class _AddTaskState extends State<AddTask> {
               decoration: const InputDecoration(
                 hintText: 'Название задачи',
               ),
-              style: TextStyle(fontSize: 16, color: Colors.indigo[600]),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Colors.indigo[600]),
             ),
             const SizedBox(height: 25),
             Text(
@@ -84,7 +87,10 @@ class _AddTaskState extends State<AddTask> {
             TextFormField(
               readOnly: true,
               controller: dateInputController,
-              style: TextStyle(fontSize: 16, color: Colors.indigo[600]),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Colors.indigo[600]),
               onTap: _showDatePicker,
               decoration: const InputDecoration(
                 hintText: 'Крайний срок',
