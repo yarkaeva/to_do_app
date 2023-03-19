@@ -27,7 +27,7 @@ class CustomTheme {
         ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.w500,
             color: Colors.indigo,
           ),
@@ -45,7 +45,7 @@ class CustomTheme {
             ),
           ),
         ),
-        buttonTheme: ButtonThemeData(buttonColor: Colors.red[200]),
+        iconTheme: const IconThemeData(color: Colors.red),
         primarySwatch: Colors.indigo,
         appBarTheme: AppBarTheme(
           centerTitle: true,

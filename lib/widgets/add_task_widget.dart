@@ -24,27 +24,25 @@ class _AddTaskState extends State<AddTask> {
       initialDate: _selectedDate == null ? DateTime.now() : _selectedDate!,
       firstDate: DateTime.now(),
       lastDate: DateTime(2030),
-    ).then((value) {
-      setState(() {
-        _selectedDate = value;
-        if (_selectedDate == null) {
-          dateInputController.clear();
-        } else {
-          dateInputController.text =
-              DateFormat('dd. MM. yy').format(_selectedDate!);
-        }
-      });
-    });
+    ).then(
+      (value) {
+        setState(
+          () {
+            if (value != null) _selectedDate = value;
+            dateInputController.text =
+                DateFormat('dd. MM. yy').format(_selectedDate!);
+          },
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 30,
-        left: 20,
-        right: 20,
-        bottom: 20,
+      padding: const EdgeInsets.symmetric(
+        vertical: 30,
+        horizontal: 20,
       ),
       child: Form(
         key: _formKey,
@@ -92,8 +90,19 @@ class _AddTaskState extends State<AddTask> {
                   .titleSmall
                   ?.copyWith(color: Colors.indigo[600]),
               onTap: _showDatePicker,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Крайний срок',
+                suffixIcon: IconButton(
+                  splashRadius: 20,
+                  onPressed: () {
+                    _selectedDate = null;
+                    dateInputController.clear();
+                  },
+                  icon: Icon(
+                    Icons.clear,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 25),
