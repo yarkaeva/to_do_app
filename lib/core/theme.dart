@@ -36,7 +36,10 @@ class CustomTheme {
             fontWeight: FontWeight.w500,
           ),
           titleSmall: TextStyle(
-              fontSize: 16, fontWeight: FontWeight.w400, color: Colors.indigo),
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.indigo,
+          ),
         ),
         bottomSheetTheme: const BottomSheetThemeData(
           shape: RoundedRectangleBorder(
