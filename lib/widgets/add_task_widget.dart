@@ -18,6 +18,14 @@ class _AddTaskState extends State<AddTask> {
   final taskTitleInputController = TextEditingController();
   final dateInputController = TextEditingController();
 
+  String? _validator(String? value) {
+    final valueWithoutSpaces = value?.replaceAll(' ', '');
+    if (valueWithoutSpaces == null || valueWithoutSpaces.isEmpty) {
+      return 'Название задачи не может быть пустым';
+    }
+    return null;
+  }
+
   void _showDatePicker() {
     showDatePicker(
       context: context,
@@ -28,9 +36,11 @@ class _AddTaskState extends State<AddTask> {
       (value) {
         setState(
           () {
-            if (value != null) _selectedDate = value;
-            dateInputController.text =
-                DateFormat('dd. MM. yy').format(_selectedDate!);
+            if (value != null) {
+              _selectedDate = value;
+              dateInputController.text =
+                  DateFormat('dd. MM. yy').format(_selectedDate!);
+            }
           },
         );
       },
@@ -59,13 +69,7 @@ class _AddTaskState extends State<AddTask> {
             ),
             TextFormField(
               controller: taskTitleInputController,
-              validator: (value) {
-                value = value?.replaceAll(' ', '');
-                if (value == null || value.isEmpty) {
-                  return 'Название задачи не может быть пустым';
-                }
-                return null;
-              },
+              validator: _validator,
               decoration: const InputDecoration(
                 hintText: 'Название задачи',
               ),

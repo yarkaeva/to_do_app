@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_app/data/data.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:to_do_list_app/data/task_model.dart';
 import 'package:to_do_list_app/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/widgets/tasks_list_item.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({required this.dataConstructor, super.key});
-  final Data dataConstructor;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TaskModel> get tasksList => widget.dataConstructor.data;
-
-  void addNewTaskToTasksList(TaskModel newTask) {
-    tasksList.insert(0, newTask);
-    setState(() {});
+  Future<void> addNewTaskToTasksList(TaskModel newTask) async {
+    // if (!Hive.isAdapterRegistered(0)) {
+    //   Hive.registerAdapter(TaskModelAdapter());
+    // }
+    await Hive.box<TaskModel>('tasks').add(newTask);
   }
 
   void _showModalBottomSheet() {
@@ -50,25 +49,30 @@ class _HomePageState extends State<HomePage> {
           'My Tasks',
         ),
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        itemCount: tasksList.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                TasksListItem(task: tasksList[index]),
-              ],
-            );
-          } else {
-            return TasksListItem(task: tasksList[index]);
-          }
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<TaskModel>('tasks').listenable(),
+        builder: (context, tasksBox, _) {
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            itemCount: tasksBox.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TasksListItem(task: tasksBox.get(index)!),
+                  ],
+                );
+              } else {
+                return TasksListItem(task: tasksBox.get(index)!);
+              }
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+          );
         },
-        separatorBuilder: (context, index) => const SizedBox(height: 8.0),
       ),
     );
   }
