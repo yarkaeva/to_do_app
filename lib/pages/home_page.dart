@@ -13,10 +13,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> addNewTaskToTasksList(TaskModel newTask) async {
-    // if (!Hive.isAdapterRegistered(0)) {
-    //   Hive.registerAdapter(TaskModelAdapter());
-    // }
     await Hive.box<TaskModel>('tasks').add(newTask);
+    Hive.box<TaskModel>('tasks').deleteAt(0);
   }
 
   void _showModalBottomSheet() {
@@ -63,11 +61,11 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TasksListItem(task: tasksBox.get(index)!),
+                    TasksListItem(task: tasksBox.getAt(index)!),
                   ],
                 );
               } else {
-                return TasksListItem(task: tasksBox.get(index)!);
+                return TasksListItem(task: tasksBox.getAt(index)!);
               }
             },
             separatorBuilder: (context, index) => const SizedBox(height: 8.0),
