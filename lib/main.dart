@@ -6,9 +6,7 @@ import 'package:to_do_list_app/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(TaskModelAdapter());
-  await Hive.openBox<TaskModel>('tasks');
+  await hiveInit();
   runApp(const App());
 }
 
@@ -26,4 +24,10 @@ class App extends StatelessWidget {
       },
     );
   }
+}
+
+Future<void> hiveInit() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskModelAdapter());
+  await Hive.openBox<TaskModel>('tasks');
 }

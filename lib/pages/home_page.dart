@@ -12,9 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Box<TaskModel> tasksBox = Hive.box<TaskModel>('tasks');
+
   Future<void> addNewTaskToTasksList(TaskModel newTask) async {
-    await Hive.box<TaskModel>('tasks').add(newTask);
-    Hive.box<TaskModel>('tasks').deleteAt(0);
+    if (!Hive.isBoxOpen('tasks')) {
+      await Hive.openBox<TaskModel>('tasks');
+    }
+    await tasksBox.add(newTask);
   }
 
   void _showModalBottomSheet() {
@@ -48,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: ValueListenableBuilder(
-        valueListenable: Hive.box<TaskModel>('tasks').listenable(),
+        valueListenable: tasksBox.listenable(),
         builder: (context, tasksBox, _) {
           return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
