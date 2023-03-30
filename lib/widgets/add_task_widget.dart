@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_list_app/data/repository/task_data_repository.dart';
 import 'package:to_do_list_app/data/task_model.dart';
 
 final _formKey = GlobalKey<FormState>();
 
 class AddTask extends StatefulWidget {
-  const AddTask({required this.addNewTaskToTasksList, super.key});
-  final void Function(TaskModel newTask) addNewTaskToTasksList;
+  const AddTask({super.key});
 
   @override
   State<AddTask> createState() => _AddTaskState();
 }
 
 class _AddTaskState extends State<AddTask> {
+  final TaskDataRepo _taskDataRepo = TaskDataRepo();
   DateTime? _selectedDate;
 
   final taskTitleInputController = TextEditingController();
@@ -115,7 +116,7 @@ class _AddTaskState extends State<AddTask> {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
-                widget.addNewTaskToTasksList(
+                _taskDataRepo.addNewTask(
                   TaskModel(
                     id: DateTime.now().millisecondsSinceEpoch.toInt(),
                     title: taskTitleInputController.text,
