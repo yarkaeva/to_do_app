@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
-import 'package:to_do_list_app/data/mapper.dart';
-import 'package:to_do_list_app/data/task_model.dart';
-import 'package:to_do_list_app/domain/entity/task_entity.dart';
-import 'package:to_do_list_app/domain/repository/task_repository.dart';
+import 'package:to_do_list_app/features/task/data/mappers/mapper.dart';
+import 'package:to_do_list_app/features/task/data/models/task_model.dart';
+import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
+import 'package:to_do_list_app/features/task/domain/repository/task_repository.dart';
 
 class TaskDataRepo extends TaskRepository {
   @override

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_app/core/extensions/date_time_extensions.dart';
-import 'package:to_do_list_app/domain/entity/task_entity.dart';
+import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
 class TasksListItem extends StatefulWidget {
   const TasksListItem({
     required this.task,
     super.key,
   });
+
   final TaskEntity task;
 
   @override

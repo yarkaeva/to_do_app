@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:to_do_list_app/data/repository/task_data_repository.dart';
-import 'package:to_do_list_app/data/task_model.dart';
-import 'package:to_do_list_app/widgets/add_task_widget.dart';
-import 'package:to_do_list_app/widgets/tasks_list_item.dart';
+import 'package:to_do_list_app/features/task/data/models/task_model.dart';
+import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
+import 'package:to_do_list_app/features/task/presentation/widgets/add_task_widget.dart';
+import 'package:to_do_list_app/features/task/presentation/widgets/tasks_list_item.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

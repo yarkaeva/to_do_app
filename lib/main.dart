@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:to_do_list_app/core/theme.dart';
-import 'package:to_do_list_app/data/task_model.dart';
-import 'package:to_do_list_app/pages/home_page.dart';
+import 'package:to_do_list_app/features/task/data/models/task_model.dart';
+import 'package:to_do_list_app/features/task/presentation/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
