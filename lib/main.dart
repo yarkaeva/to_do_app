@@ -29,6 +29,4 @@ class App extends StatelessWidget {
 Future<void> hiveInit() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskModelAdapter());
-  // TODO: убрать
-  await Hive.openBox<TaskModel>('tasks');
 }

@@ -1,24 +1,19 @@
 import 'package:hive/hive.dart';
-import 'package:to_do_list_app/features/task/data/mappers/mapper.dart';
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 import 'package:to_do_list_app/features/task/domain/repository/task_repository.dart';
 
-// TODO: Impl
-class TaskDataRepo extends TaskRepository {
- // TODO: должен принимать Entity
+class TaskRepositoryImpl extends TaskRepository {
   @override
-  Future<void> addNewTask(TaskModel newTask) async {
-    final box = await Hive.openBox<TaskModel>('tasks');
-    await box.add(newTask);
+  Future<void> addTask(TaskEntity newTask) async {
+    final storage = await Hive.openBox<TaskModel>('tasks');
+    await storage.add(newTask.toModel());
   }
 
-  // TODO:Future
   @override
-  TaskEntity getTaskByIndex(int index) {
-    final box = Hive.box<TaskModel>('tasks');
-    //  TODO: null check
-    final task = TaskMapper.fromTaskData(box.getAt(index)!);
-    return task;
+  Future<List<TaskEntity>> getTasksList() async {
+    final storage = await Hive.openBox<TaskModel>('tasks');
+    final tasksList = storage.values.map((task) => task.toEntity()).toList();
+    return tasksList;
   }
 }

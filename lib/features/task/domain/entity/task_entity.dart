@@ -1,3 +1,5 @@
+import 'package:to_do_list_app/features/task/data/models/task_model.dart';
+
 class TaskEntity {
   final int id;
   final String title;
@@ -10,4 +12,11 @@ class TaskEntity {
     this.dueDate,
     this.isDone = false,
   });
+
+  TaskModel toModel() => TaskModel(
+        id: id,
+        title: title,
+        dueDate: dueDate,
+        isDone: isDone,
+      );
 }

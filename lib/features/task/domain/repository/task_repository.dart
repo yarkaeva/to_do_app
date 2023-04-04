@@ -1,13 +1,9 @@
-import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
-// TODO: написать комменты документирования ///
 abstract class TaskRepository {
-  // TODO: должен принимать Entity
-  Future<void> addNewTask(TaskModel newTask);
+  ///Adding a task to DataBase.
+  Future<void> addTask(TaskEntity newTask);
 
-  // TODO: Future
-  TaskEntity getTaskByIndex(int index);
-
-  // TODO: метод получения списка задач.
+  ///Get a list of tasks from DataBase.
+  Future<List<TaskEntity>> getTasksList();
 }

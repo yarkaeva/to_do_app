@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/tasks_list_item.dart';
@@ -53,34 +51,36 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
-  final TaskDataRepo repo = TaskDataRepo();
+  final TaskRepositoryImpl repo = TaskRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
-
-    // TODO: FutureBuilder
-    return ValueListenableBuilder(
-      valueListenable: Hive.box<TaskModel>('tasks').listenable(),
-      builder: (context, tasksBox, _) => ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        itemCount: tasksBox.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                TasksListItem(task: repo.getTaskByIndex(index)),
-              ],
-            );
-          } else {
-            return TasksListItem(task: repo.getTaskByIndex(index));
-          }
-        },
-        separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-      ),
+    return FutureBuilder(
+      future: repo.getTasksList(),
+      builder: (context, snapshot) => snapshot.hasData
+          ? ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              itemCount: snapshot.data!.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TasksListItem(task: snapshot.data![index]),
+                    ],
+                  );
+                } else {
+                  return TasksListItem(task: snapshot.data![index]);
+                }
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+            )
+          : const Center(
+              child: CircularProgressIndicator.adaptive(),
+            ),
     );
   }
 }
