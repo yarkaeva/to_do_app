@@ -57,6 +57,8 @@ class _TasksListState extends State<TasksList> {
 
   @override
   Widget build(BuildContext context) {
+
+    // TODO: FutureBuilder
     return ValueListenableBuilder(
       valueListenable: Hive.box<TaskModel>('tasks').listenable(),
       builder: (context, tasksBox, _) => ListView.separated(
