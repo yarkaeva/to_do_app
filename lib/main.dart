@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list_app/core/theme.dart';
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
+import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/presentation/pages/home_page.dart';
 
 void main() async {
@@ -15,13 +17,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: CustomTheme.lightTheme,
-      title: 'Flutter Demo',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomePage(),
-      },
+    return ChangeNotifierProvider(
+      create: (context) => TasksListModel(),
+      child: MaterialApp(
+        theme: CustomTheme.lightTheme,
+        title: 'Flutter Demo',
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomePage(),
+        },
+      ),
     );
   }
 }

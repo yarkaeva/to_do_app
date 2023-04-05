@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
+import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -123,6 +125,7 @@ class _AddTaskState extends State<AddTask> {
                     dueDate: _selectedDate,
                   ),
                 );
+                context.read<TasksListModel>().updateTasks();
                 Navigator.pop(context);
               },
               child: const Text('Создать задачу'),

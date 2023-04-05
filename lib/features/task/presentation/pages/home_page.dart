@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/tasks_list_item.dart';
 
@@ -41,46 +42,34 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class TasksList extends StatefulWidget {
-  const TasksList({
-    super.key,
-  });
-
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
-  final TaskRepositoryImpl repo = TaskRepositoryImpl();
+class TasksList extends StatelessWidget {
+  const TasksList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: repo.getTasksList(),
-      builder: (context, snapshot) => snapshot.hasData
-          ? ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              itemCount: snapshot.data!.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TasksListItem(task: snapshot.data![index]),
-                    ],
-                  );
-                } else {
-                  return TasksListItem(task: snapshot.data![index]);
-                }
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-            )
-          : const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
+    return Consumer<TasksListModel>(
+      builder: (context, model, _) {
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          itemCount: model.tasks.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TasksListItem(task: model.tasks[index]),
+                ],
+              );
+            } else {
+              return TasksListItem(task: model.tasks[index]);
+            }
+          },
+          separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+        );
+      },
     );
   }
 }
