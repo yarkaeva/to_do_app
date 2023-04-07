@@ -120,7 +120,7 @@ class _AddTaskState extends State<AddTask> {
                 }
                 _repo.addTask(
                   TaskEntity(
-                    id: DateTime.now().millisecondsSinceEpoch.toInt(),
+                    id: DateTime.now().millisecondsSinceEpoch ~/ 10000,
                     title: taskTitleInputController.text,
                     dueDate: _selectedDate,
                   ),
