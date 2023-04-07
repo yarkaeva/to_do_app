@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
         title: const Text(
-          'My Tasks',
+          'MY TASKS',
         ),
       ),
       body: const TasksList(),

@@ -27,17 +27,17 @@ class CustomTheme {
         ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(
-            fontSize: 18,
+            fontSize: 19,
             fontWeight: FontWeight.w500,
-            color: Colors.indigo,
+            color: Colors.deepPurple,
           ),
           bodyMedium: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+            fontSize: 17,
+            fontWeight: FontWeight.w400,
           ),
           titleSmall: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w300,
             color: Colors.indigo,
           ),
         ),
@@ -51,16 +51,18 @@ class CustomTheme {
         iconTheme: const IconThemeData(color: Colors.red),
         primarySwatch: Colors.indigo,
         appBarTheme: AppBarTheme(
+          elevation: 0,
+          toolbarHeight: 65,
           centerTitle: true,
-          backgroundColor: Colors.white,
-          iconTheme: IconThemeData(
+          backgroundColor: Colors.deepPurple[500],
+          iconTheme: const IconThemeData(
             size: 30,
-            color: Colors.indigo[600],
+            color: Colors.black87,
           ),
-          titleTextStyle: TextStyle(
-            color: Colors.indigo[900],
+          titleTextStyle: const TextStyle(
+            color: Colors.black87,
             fontSize: 25,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       );
