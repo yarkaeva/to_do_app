@@ -5,6 +5,7 @@ import 'package:to_do_list_app/features/task/data/repository/task_data_repositor
 import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
+// TODO: почему он вообще здесь а не в стейте?
 final _formKey = GlobalKey<FormState>();
 
 class AddTask extends StatefulWidget {
@@ -15,6 +16,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  // TODO: доступ к репо только через контроллер!
   final TaskRepositoryImpl _repo = TaskRepositoryImpl();
   DateTime? _selectedDate;
 
@@ -118,6 +120,8 @@ class _AddTaskState extends State<AddTask> {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
+                // TODO: доступ к репо только через контроллер!
+
                 _repo.addTask(
                   TaskEntity(
                     id: DateTime.now().millisecondsSinceEpoch.toInt(),

@@ -1,5 +1,6 @@
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 
+// TODO: Equatable.
 class TaskEntity {
   final int id;
   final String title;

@@ -42,6 +42,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
+// TODO: один класс - один файл. Лучше соблюдать это правило, чтобы не путаться.
 class TasksList extends StatelessWidget {
   const TasksList({super.key});
 
