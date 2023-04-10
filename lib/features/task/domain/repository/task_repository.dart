@@ -10,7 +10,6 @@ abstract class TaskRepository {
   ///Delete a task from DataBase.
   Future<void> deleteTask(int id);
 
-  // TODO: название не отражает смысла (подумай на тему toggleTaskStatus). Вместо задачи работай с id. И зачем вообще новый статус передавать, если можно просто использовать !task.isDone, раз у нас всего два статуса.
   ///Update isDone status of task in DataBase.
-  Future<void> updateTask(bool newStatus, TaskEntity task);
+  Future<void> toggleTaskStatus(int id);
 }

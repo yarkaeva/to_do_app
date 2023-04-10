@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
-class TasksListModel extends ChangeNotifier {
+class TasksController extends ChangeNotifier {
   final TaskRepositoryImpl _repositoryImpl = TaskRepositoryImpl();
+
   List<TaskEntity> get tasks => _tasks;
   List<TaskEntity> _tasks = [];
 
-  TasksListModel() {
+  TasksController() {
     loadTasks();
   }
 
@@ -17,13 +18,24 @@ class TasksListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateTasks() async {
-    _tasks = await _repositoryImpl.getTasksList();
+  Future<void> addTask(TaskEntity newTask) async {
+    await _repositoryImpl.addTask(newTask);
+    _tasks.add(newTask);
     notifyListeners();
   }
 
-  Future<void> deleteTaskInModel(TaskEntity task) async {
+  Future<void> deleteTask(TaskEntity task) async {
+    await _repositoryImpl.deleteTask(task.id);
     _tasks.remove(task);
+    notifyListeners();
+  }
+
+  Future<void> toggleTaskStatus(int id) async {
+    await _repositoryImpl.toggleTaskStatus(id);
+    final index = _tasks.indexWhere((element) => element.id == id);
+    final task = _tasks[index];
+    _tasks[index] = task.copyWith(isDone: !task.isDone);
+
     notifyListeners();
   }
 }

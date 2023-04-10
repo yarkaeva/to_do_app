@@ -29,16 +29,13 @@ class TaskRepositoryImpl extends TaskRepository {
   }
 
   @override
-  Future<void> updateTask(bool newStatus, TaskEntity task) async {
+  Future<void> toggleTaskStatus(int id) async {
     final storage = await Hive.openBox<TaskModel>('tasks');
-    // TODO: добавить в TaskEntity метод copyWith().
-    final updatedTask = TaskEntity(
-      id: task.id,
-      title: task.title,
-      dueDate: task.dueDate,
-      isDone: newStatus,
-    );
-    await storage.put(updatedTask.id, updatedTask.toModel());
+    final task = storage.get(id);
+    if (task != null) {
+      final updatedTask = task.copyWith(isDone: !task.isDone);
+      await storage.put(id, updatedTask);
+    }
     unawaited(storage.close());
   }
 }

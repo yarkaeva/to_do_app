@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list_app/core/theme.dart';
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
-import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
+import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
 import 'package:to_do_list_app/features/task/presentation/pages/home_page.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TasksListModel(),
+      create: (context) => TasksController(),
       child: MaterialApp(
         theme: CustomTheme.lightTheme,
         title: 'Flutter Demo',

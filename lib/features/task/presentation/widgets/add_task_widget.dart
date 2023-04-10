@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
-import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
+import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -15,7 +14,6 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  final TaskRepositoryImpl _repo = TaskRepositoryImpl();
   DateTime? _selectedDate;
 
   final taskTitleInputController = TextEditingController();
@@ -92,10 +90,7 @@ class _AddTaskState extends State<AddTask> {
             TextFormField(
               readOnly: true,
               controller: dateInputController,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Colors.indigo[600]),
+              style: Theme.of(context).textTheme.titleSmall,
               onTap: _showDatePicker,
               decoration: InputDecoration(
                 hintText: 'Крайний срок',
@@ -118,14 +113,13 @@ class _AddTaskState extends State<AddTask> {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
-                _repo.addTask(
-                  TaskEntity(
-                    id: DateTime.now().millisecondsSinceEpoch ~/ 10000,
-                    title: taskTitleInputController.text,
-                    dueDate: _selectedDate,
-                  ),
-                );
-                context.read<TasksListModel>().updateTasks();
+                context.read<TasksController>().addTask(
+                      TaskEntity(
+                        id: DateTime.now().millisecondsSinceEpoch ~/ 10000,
+                        title: taskTitleInputController.text,
+                        dueDate: _selectedDate,
+                      ),
+                    );
                 Navigator.pop(context);
               },
               child: const Text('Создать задачу'),

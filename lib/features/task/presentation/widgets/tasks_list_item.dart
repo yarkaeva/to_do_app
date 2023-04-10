@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list_app/core/extensions/date_time_extensions.dart';
-import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
-import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
+import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
 
-class TasksListItem extends StatefulWidget {
+class TasksListItem extends StatelessWidget {
   const TasksListItem({
     required this.task,
     super.key,
@@ -15,23 +14,15 @@ class TasksListItem extends StatefulWidget {
   final TaskEntity task;
 
   @override
-  State<TasksListItem> createState() => _TasksListItemState();
-}
-
-class _TasksListItemState extends State<TasksListItem> {
-  final TaskRepositoryImpl _repo = TaskRepositoryImpl();
-
-  @override
   Widget build(BuildContext context) {
-    return Consumer<TasksListModel>(
-      builder: (context, model, _) => Slidable(
+    return Consumer<TasksController>(
+      builder: (context, controller, _) => Slidable(
         endActionPane: ActionPane(
           motion: const StretchMotion(),
           children: [
             SlidableAction(
               onPressed: (context) {
-                _repo.deleteTask(widget.task.id);
-                model.deleteTaskInModel(widget.task);
+                controller.deleteTask(task);
               },
               icon: Icons.delete,
               backgroundColor: Colors.red.shade300,
@@ -40,27 +31,25 @@ class _TasksListItemState extends State<TasksListItem> {
           ],
         ),
         child: CheckboxListTile(
-          tileColor:
-              !widget.task.isDone ? Colors.indigo[100] : Colors.green[300],
+          tileColor: !task.isDone ? Colors.indigo[100] : Colors.green[300],
           activeColor: Colors.indigo[400],
-          value: widget.task.isDone,
+          value: task.isDone,
           onChanged: (newStatus) {
             if (newStatus != null) {
-              _repo.updateTask(newStatus, widget.task);
-              model.updateTasks();
+              controller.toggleTaskStatus(task.id);
             }
           },
           title: Text(
-            widget.task.title.trim(),
+            task.title.trim(),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  decoration: widget.task.isDone
+                  decoration: task.isDone
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
                 ),
           ),
-          subtitle: widget.task.dueDate != null
+          subtitle: task.dueDate != null
               ? Text(
-                  'крайний срок:  ${widget.task.dueDate!.format}',
+                  'крайний срок:  ${task.dueDate!.format}',
                 )
               : null,
         ),

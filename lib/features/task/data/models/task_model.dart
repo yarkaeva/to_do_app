@@ -29,4 +29,18 @@ class TaskModel {
         dueDate: dueDate,
         isDone: isDone,
       );
+
+  TaskModel copyWith({
+    int? id,
+    String? title,
+    DateTime? dueDate,
+    bool? isDone,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      dueDate: dueDate ?? this.dueDate,
+      isDone: isDone ?? this.isDone,
+    );
+  }
 }

@@ -19,4 +19,18 @@ class TaskEntity {
         dueDate: dueDate,
         isDone: isDone,
       );
+
+  TaskEntity copyWith({
+    int? id,
+    String? title,
+    DateTime? dueDate,
+    bool? isDone,
+  }) {
+    return TaskEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      dueDate: dueDate ?? this.dueDate,
+      isDone: isDone ?? this.isDone,
+    );
+  }
 }

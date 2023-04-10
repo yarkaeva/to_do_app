@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_list_app/features/task/data/state/tasks_list_model.dart';
+import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/tasks_list_item.dart';
 
@@ -47,11 +47,11 @@ class TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TasksListModel>(
-      builder: (context, model, _) {
+    return Consumer<TasksController>(
+      builder: (context, controller, _) {
         return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          itemCount: model.tasks.length,
+          itemCount: controller.tasks.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             if (index == 0) {
@@ -60,11 +60,11 @@ class TasksList extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  TasksListItem(task: model.tasks[index]),
+                  TasksListItem(task: controller.tasks[index]),
                 ],
               );
             } else {
-              return TasksListItem(task: model.tasks[index]);
+              return TasksListItem(task: controller.tasks[index]);
             }
           },
           separatorBuilder: (context, index) => const SizedBox(height: 8.0),
