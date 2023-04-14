@@ -54,7 +54,7 @@ class CustomTheme {
           elevation: 0,
           toolbarHeight: 65,
           centerTitle: true,
-          backgroundColor: Colors.deepPurple[500],
+          backgroundColor: Colors.indigo[300],
           iconTheme: const IconThemeData(
             size: 30,
             color: Colors.black87,

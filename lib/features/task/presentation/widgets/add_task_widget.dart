@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
 
-final _formKey = GlobalKey<FormState>();
+
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -14,6 +14,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  final _formKey = GlobalKey<FormState>();
   DateTime? _selectedDate;
 
   final taskTitleInputController = TextEditingController();

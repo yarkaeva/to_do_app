@@ -4,12 +4,12 @@ import 'package:to_do_list_app/features/task/data/repository/task_data_repositor
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
 
 class TasksController extends ChangeNotifier {
-  final TaskRepositoryImpl _repositoryImpl = TaskRepositoryImpl();
+  final TaskRepositoryImpl _repositoryImpl;
 
   List<TaskEntity> get tasks => _tasks;
   List<TaskEntity> _tasks = [];
 
-  TasksController() {
+  TasksController(this._repositoryImpl) {
     loadTasks();
   }
 

@@ -1,12 +1,16 @@
+import 'package:equatable/equatable.dart';
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 
-class TaskEntity {
+class TaskEntity extends Equatable {
   final int id;
   final String title;
   final DateTime? dueDate;
   final bool isDone;
 
-  TaskEntity({
+  @override
+  List<Object?> get props => [id, title, dueDate, isDone];
+
+  const TaskEntity({
     required this.id,
     required this.title,
     this.dueDate,

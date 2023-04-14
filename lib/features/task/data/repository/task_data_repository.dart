@@ -15,7 +15,6 @@ class TaskRepositoryImpl extends TaskRepository {
   Future<List<TaskEntity>> getTasksList() async {
     final storage = await Hive.openBox<TaskModel>('tasks');
     final tasksList = storage.values.map((task) => task.toEntity()).toList();
-    unawaited(storage.compact());
     unawaited(storage.close());
     return tasksList;
   }
@@ -24,7 +23,6 @@ class TaskRepositoryImpl extends TaskRepository {
   Future<void> deleteTask(int id) async {
     final storage = await Hive.openBox<TaskModel>('tasks');
     await storage.delete(id);
-    unawaited(storage.compact());
     unawaited(storage.close());
   }
 

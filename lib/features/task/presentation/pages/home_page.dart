@@ -37,39 +37,30 @@ class HomePage extends StatelessWidget {
           'MY TASKS',
         ),
       ),
-      body: const TasksList(),
-    );
-  }
-}
-
-class TasksList extends StatelessWidget {
-  const TasksList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<TasksController>(
-      builder: (context, controller, _) {
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          itemCount: controller.tasks.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TasksListItem(task: controller.tasks[index]),
-                ],
-              );
-            } else {
-              return TasksListItem(task: controller.tasks[index]);
-            }
-          },
-          separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-        );
-      },
+      body: Consumer<TasksController>(
+        builder: (context, controller, _) {
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            itemCount: controller.tasks.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TasksListItem(task: controller.tasks[index]),
+                  ],
+                );
+              } else {
+                return TasksListItem(task: controller.tasks[index]);
+              }
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+          );
+        },
+      ),
     );
   }
 }
