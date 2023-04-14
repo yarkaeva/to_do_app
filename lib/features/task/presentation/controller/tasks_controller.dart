@@ -15,12 +15,19 @@ class TasksController extends ChangeNotifier {
 
   Future<void> loadTasks() async {
     _tasks = await _repositoryImpl.getTasksList();
+    _sorting(_tasks);
     notifyListeners();
   }
 
   Future<void> addTask(TaskEntity newTask) async {
     await _repositoryImpl.addTask(newTask);
-    _tasks.add(newTask);
+
+    if (newTask.dueDate == null) {
+      _tasks.insert(0, newTask);
+    } else {
+      _tasks.add(newTask);
+      _sorting(_tasks);
+    }
     notifyListeners();
   }
 
@@ -34,8 +41,34 @@ class TasksController extends ChangeNotifier {
     await _repositoryImpl.toggleTaskStatus(id);
     final index = _tasks.indexWhere((element) => element.id == id);
     final task = _tasks[index];
-    _tasks[index] = task.copyWith(isDone: !task.isDone);
+    _tasks
+      ..add(task.copyWith(isDone: !task.isDone))
+      ..removeAt(index);
+
+    if (task.isDone == true) {
+      _sorting(_tasks);
+    }
 
     notifyListeners();
   }
+
+  void _sorting(List<TaskEntity> list) {
+    list
+      ..sort(_dateSort)
+      ..sort(_statusSort);
+  }
+}
+
+int _dateSort(TaskEntity a, TaskEntity b) {
+  final isDoneA = a.dueDate;
+  final isDoneB = b.dueDate;
+  return isDoneA == null
+      ? -1
+      : isDoneB == null
+          ? 1
+          : isDoneA.compareTo(isDoneB);
+}
+
+int _statusSort(TaskEntity a, TaskEntity b) {
+  return a.isDone == b.isDone ? 0 : (a.isDone ? 1 : -1);
 }
