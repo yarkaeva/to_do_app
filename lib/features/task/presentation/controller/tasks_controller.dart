@@ -22,12 +22,9 @@ class TasksController extends ChangeNotifier {
   Future<void> addTask(TaskEntity newTask) async {
     await _repositoryImpl.addTask(newTask);
 
-    if (newTask.dueDate == null) {
-      _tasks.insert(0, newTask);
-    } else {
-      _tasks.add(newTask);
-      _sorting(_tasks);
-    }
+    _tasks.insert(0, newTask);
+    _sorting(_tasks);
+
     notifyListeners();
   }
 
@@ -60,13 +57,13 @@ class TasksController extends ChangeNotifier {
 }
 
 int _dateSort(TaskEntity a, TaskEntity b) {
-  final isDoneA = a.dueDate;
-  final isDoneB = b.dueDate;
-  return isDoneA == null
+  final dateA = a.dueDate;
+  final dateB = b.dueDate;
+  return dateA == null
       ? -1
-      : isDoneB == null
+      : dateB == null
           ? 1
-          : isDoneA.compareTo(isDoneB);
+          : dateA.compareTo(dateB);
 }
 
 int _statusSort(TaskEntity a, TaskEntity b) {
