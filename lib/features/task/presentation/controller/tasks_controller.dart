@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
+import 'package:to_do_list_app/features/task/domain/repository/task_repository.dart';
 
 class TasksController extends ChangeNotifier {
-  final TaskRepositoryImpl _repositoryImpl;
+  final TaskRepository _repositoryImpl;
 
   List<TaskEntity> get tasks => _tasks;
   List<TaskEntity> _tasks = [];
