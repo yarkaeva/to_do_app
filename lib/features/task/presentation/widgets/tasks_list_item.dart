@@ -30,7 +30,7 @@ class TasksListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               title: const Text('Confirm'),
-              content: const Text('Are you sure you wish to delete this item?'),
+              content: const Text('Are you sure you wish to delete this task?'),
               actions: [
                 ElevatedButton(
                   onPressed: () {
