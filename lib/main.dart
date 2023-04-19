@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:provider/provider.dart';
 import 'package:to_do_list_app/core/theme.dart';
 import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 import 'package:to_do_list_app/features/task/data/repository/task_data_repository.dart';
-import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
+import 'package:to_do_list_app/features/task/presentation/bloc/tasks_bloc.dart';
 import 'package:to_do_list_app/features/task/presentation/pages/home_page.dart';
 
 void main() async {
@@ -18,8 +18,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TasksController(TaskRepositoryImpl()),
+    return BlocProvider<TasksBloc>(
+      create: (context) =>
+          TasksBloc(repository: TaskRepositoryImpl())..add(FirstLoad()),
       child: MaterialApp(
         theme: CustomTheme.lightTheme,
         title: 'Flutter Demo',
