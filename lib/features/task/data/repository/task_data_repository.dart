@@ -42,7 +42,6 @@ class TaskRepositoryImpl extends TaskRepository {
 }
 
 List<TaskEntity> _sorting(List<TaskEntity> list) {
-  // final reversedList = list.reversed;
   final listWithDate = list.where((task) => task.dueDate != null).toList()
     ..sort(_dateSort);
 
@@ -51,10 +50,19 @@ List<TaskEntity> _sorting(List<TaskEntity> list) {
       .toList()
     ..sort(_updatedSort);
 
-  final sortedList = [
+  final dateSortList = [
     ...listWithDate,
     ...listWithoutDate,
-  ]..sort(_statusSort);
+  ];
+
+  final listOfDone = dateSortList.where((task) => task.isDone).toList()
+    ..sort(_updatedSort);
+  dateSortList.removeWhere((task) => task.isDone);
+
+  final sortedList = [
+    ...dateSortList,
+    ...listOfDone.reversed.toList(),
+  ];
 
   return sortedList;
 }
@@ -67,10 +75,6 @@ int _dateSort(TaskEntity a, TaskEntity b) {
       : dateB == null
           ? -1
           : dateA.compareTo(dateB);
-}
-
-int _statusSort(TaskEntity a, TaskEntity b) {
-  return a.isDone == b.isDone ? 0 : (a.isDone ? 1 : -1);
 }
 
 int _updatedSort(TaskEntity a, TaskEntity b) {
