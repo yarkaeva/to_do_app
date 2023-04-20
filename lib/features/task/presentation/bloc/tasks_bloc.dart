@@ -53,8 +53,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     TaskDeleted event,
     Emitter<TasksState> emit,
   ) async {
-    emit(TasksLoading());
-
     await _repository.deleteTask(event.task.id);
     final tasks = await _repository.getTasksList();
 
