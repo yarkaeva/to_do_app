@@ -9,21 +9,23 @@ class TaskRepositoryImpl extends TaskRepository {
   Future<void> addTask(TaskEntity newTask) async {
     final storage = await Hive.openBox<TaskModel>('tasks');
     await storage.put(newTask.id, newTask.toModel());
+    await storage.close();
   }
 
   @override
   Future<List<TaskEntity>> getTasksList() async {
     final storage = await Hive.openBox<TaskModel>('tasks');
     final tasksList = storage.values.map((task) => task.toEntity()).toList();
-    unawaited(storage.close());
-    return tasksList;
+    await storage.close();
+
+    return _sorting(tasksList);
   }
 
   @override
   Future<void> deleteTask(int id) async {
     final storage = await Hive.openBox<TaskModel>('tasks');
     await storage.delete(id);
-    unawaited(storage.close());
+    await storage.close();
   }
 
   @override
@@ -31,9 +33,51 @@ class TaskRepositoryImpl extends TaskRepository {
     final storage = await Hive.openBox<TaskModel>('tasks');
     final task = storage.get(id);
     if (task != null) {
-      final updatedTask = task.copyWith(isDone: !task.isDone);
+      final updatedTask =
+          task.copyWith(isDone: !task.isDone, updatedAt: DateTime.now());
       await storage.put(id, updatedTask);
     }
-    unawaited(storage.close());
+    await storage.close();
   }
+}
+
+List<TaskEntity> _sorting(List<TaskEntity> list) {
+  final listWithDate = list
+      .where((task) => task.dueDate != null && !task.isDone)
+      .toList()
+    ..sort(_dateSort);
+
+  final listWithoutDate = list.reversed
+      .where((task) => task.dueDate == null && !task.isDone)
+      .toList()
+    ..sort(_updatedSort);
+
+  final listOfDone = list.where((task) => task.isDone).toList()
+    ..sort(_updatedSortForDone);
+
+  final sortedList = [
+    ...listWithDate,
+    ...listWithoutDate,
+    ...listOfDone,
+  ];
+
+  return sortedList;
+}
+
+int _dateSort(TaskEntity a, TaskEntity b) {
+  final dateA = a.dueDate;
+  final dateB = b.dueDate;
+  return dateA == null
+      ? 1
+      : dateB == null
+          ? -1
+          : dateA.compareTo(dateB);
+}
+
+int _updatedSort(TaskEntity a, TaskEntity b) {
+  return b.updatedAt.compareTo(a.updatedAt);
+}
+
+int _updatedSortForDone(TaskEntity a, TaskEntity b) {
+  return a.updatedAt.compareTo(b.updatedAt);
 }

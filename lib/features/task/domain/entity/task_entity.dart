@@ -4,6 +4,7 @@ import 'package:to_do_list_app/features/task/data/models/task_model.dart';
 class TaskEntity extends Equatable {
   final int id;
   final String title;
+  final DateTime updatedAt;
   final DateTime? dueDate;
   final bool isDone;
 
@@ -13,6 +14,7 @@ class TaskEntity extends Equatable {
   const TaskEntity({
     required this.id,
     required this.title,
+    required this.updatedAt,
     this.dueDate,
     this.isDone = false,
   });
@@ -20,6 +22,7 @@ class TaskEntity extends Equatable {
   TaskModel toModel() => TaskModel(
         id: id,
         title: title,
+        updatedAt: updatedAt,
         dueDate: dueDate,
         isDone: isDone,
       );
@@ -27,12 +30,14 @@ class TaskEntity extends Equatable {
   TaskEntity copyWith({
     int? id,
     String? title,
+    DateTime? updatedAt,
     DateTime? dueDate,
     bool? isDone,
   }) {
     return TaskEntity(
       id: id ?? this.id,
       title: title ?? this.title,
+      updatedAt: updatedAt ?? this.updatedAt,
       dueDate: dueDate ?? this.dueDate,
       isDone: isDone ?? this.isDone,
     );

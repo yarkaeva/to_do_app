@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_list_app/features/task/presentation/bloc/tasks_bloc.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/add_task_widget.dart';
 import 'package:to_do_list_app/features/task/presentation/widgets/tasks_list_item.dart';
 
@@ -37,28 +37,36 @@ class HomePage extends StatelessWidget {
           'MY TASKS',
         ),
       ),
-      body: Consumer<TasksController>(
-        builder: (context, controller, _) {
-          return ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            itemCount: controller.tasks.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TasksListItem(task: controller.tasks[index]),
-                  ],
-                );
-              } else {
-                return TasksListItem(task: controller.tasks[index]);
-              }
-            },
-            separatorBuilder: (context, index) => const SizedBox(height: 8.0),
-          );
+      body: BlocBuilder<TasksBloc, TasksState>(
+        builder: (context, state) {
+          if (state is TasksLoading) {
+            return const Center(
+              child: CircularProgressIndicator.adaptive(),
+            );
+          } else if (state is TasksLoaded) {
+            return ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              itemCount: state.tasks.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TasksListItem(task: state.tasks[index]),
+                    ],
+                  );
+                } else {
+                  return TasksListItem(task: state.tasks[index]);
+                }
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 8.0),
+            );
+          } else {
+            return const Center(child: Text('Can`t download tasks'));
+          }
         },
       ),
     );

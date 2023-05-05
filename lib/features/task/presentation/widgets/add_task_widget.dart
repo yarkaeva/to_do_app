@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:to_do_list_app/features/task/domain/entity/task_entity.dart';
-import 'package:to_do_list_app/features/task/presentation/controller/tasks_controller.dart';
-
-
+import 'package:to_do_list_app/features/task/presentation/bloc/tasks_bloc.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -114,13 +112,16 @@ class _AddTaskState extends State<AddTask> {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
-                context.read<TasksController>().addTask(
-                      TaskEntity(
-                        id: DateTime.now().millisecondsSinceEpoch ~/ 10000,
-                        title: taskTitleInputController.text,
-                        dueDate: _selectedDate,
-                      ),
-                    );
+                BlocProvider.of<TasksBloc>(context).add(
+                  TaskAdded(
+                    TaskEntity(
+                      id: DateTime.now().millisecondsSinceEpoch ~/ 10000,
+                      updatedAt: DateTime.now(),
+                      title: taskTitleInputController.text,
+                      dueDate: _selectedDate,
+                    ),
+                  ),
+                );
                 Navigator.pop(context);
               },
               child: const Text('Создать задачу'),
