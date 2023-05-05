@@ -7,6 +7,8 @@ abstract class TasksState extends Equatable {
   const TasksState();
 }
 
+class InitialState extends TasksState {}
+
 class TasksLoading extends TasksState {}
 
 class TasksLoaded extends TasksState {
@@ -18,4 +20,4 @@ class TasksLoaded extends TasksState {
   const TasksLoaded(this.tasks);
 }
 
-class TodosNotLoaded extends TasksState {}
+class TasksNotLoaded extends TasksState {}

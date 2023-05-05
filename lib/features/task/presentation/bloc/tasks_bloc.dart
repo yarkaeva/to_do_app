@@ -11,7 +11,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   TasksBloc({required TaskRepository repository})
       : _repository = repository,
-        super(TasksLoading()) {
+        super(InitialState()) {
     on<FirstLoad>(_onFirstLoad);
     on<TaskAdded>(_onTaskAdded);
     on<TaskToggled>(_onTaskToggled);
@@ -23,8 +23,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     Emitter<TasksState> emit,
   ) async {
     emit(TasksLoading());
-    final tasks = await _repository.getTasksList();
-    emit(TasksLoaded(tasks));
+    await _updateTasksList(emit);
   }
 
   Future<void> _onTaskAdded(
@@ -32,10 +31,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     Emitter<TasksState> emit,
   ) async {
     await _repository.addTask(event.task);
-
-    final tasks = await _repository.getTasksList();
-
-    emit(TasksLoaded(tasks));
+    await _updateTasksList(emit);
   }
 
   Future<void> _onTaskToggled(
@@ -43,10 +39,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     Emitter<TasksState> emit,
   ) async {
     await _repository.toggleTaskStatus(event.id);
-
-    final tasks = await _repository.getTasksList();
-
-    emit(TasksLoaded(tasks));
+    await _updateTasksList(emit);
   }
 
   Future<void> _onTaskDeleted(
@@ -54,8 +47,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     Emitter<TasksState> emit,
   ) async {
     await _repository.deleteTask(event.task.id);
-    final tasks = await _repository.getTasksList();
+    await _updateTasksList(emit);
+  }
 
+  Future<void> _updateTasksList(Emitter<TasksState> emit) async {
+    final tasks = await _repository.getTasksList();
     emit(TasksLoaded(tasks));
   }
 }
